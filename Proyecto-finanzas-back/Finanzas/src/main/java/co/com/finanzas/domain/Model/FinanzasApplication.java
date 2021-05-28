@@ -1,4 +1,4 @@
-package co.com.example.Finanzas;
+package co.com.finanzas.domain.Model;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
