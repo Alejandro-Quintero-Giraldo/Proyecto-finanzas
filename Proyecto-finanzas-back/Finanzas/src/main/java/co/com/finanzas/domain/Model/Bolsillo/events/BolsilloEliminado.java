@@ -1,12 +1,12 @@
-package co.com.finanzas.domain.Model.Bolsillo.comands;
+package co.com.finanzas.domain.Model.Bolsillo.events;
 
 import co.com.finanzas.domain.Model.Bolsillo.Movimiento;
 import co.com.finanzas.domain.Model.Bolsillo.values.*;
-import co.com.sofka.domain.generic.Command;
+import co.com.sofka.domain.generic.DomainEvent;
 
 import java.util.Map;
 
-public class EliminarBolsillo implements Command {
+public class BolsilloEliminado extends DomainEvent {
     public final BolsilloId bolsilloId;
     public Nombre nombre;
     public SaldoDisponible saldoDisponible;
@@ -15,7 +15,9 @@ public class EliminarBolsillo implements Command {
     public final TipoAhorro tipoAhorro;
     public PorcentajeAhorro porcentajeAhorro;
 
-    public EliminarBolsillo(BolsilloId bolsilloId, Nombre nombre, SaldoDisponible saldoDisponible, Map<MovimientoId,Movimiento> movimientos, UsuarioId uId, TipoAhorro tipoAhorro, PorcentajeAhorro porcentajeAhorro) {
+
+    public BolsilloEliminado(BolsilloId bolsilloId, Nombre nombre, SaldoDisponible saldoDisponible, Map<MovimientoId, Movimiento> movimientos, UsuarioId uId, TipoAhorro tipoAhorro, PorcentajeAhorro porcentajeAhorro) {
+        super("finanzas.bolsillo.eliminado");
         this.bolsilloId = bolsilloId;
         this.nombre = nombre;
         this.saldoDisponible = saldoDisponible;
@@ -37,7 +39,7 @@ public class EliminarBolsillo implements Command {
         return saldoDisponible;
     }
 
-    public Map<MovimientoId,Movimiento> getMovimientos() {
+    public Map<MovimientoId, Movimiento> getMovimientos() {
         return movimientos;
     }
 
@@ -52,5 +54,4 @@ public class EliminarBolsillo implements Command {
     public PorcentajeAhorro getPorcentajeAhorro() {
         return porcentajeAhorro;
     }
-
 }

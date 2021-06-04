@@ -38,4 +38,28 @@ public class Movimiento extends Entity<MovimientoId> {
     public UsuarioId getUid() {
         return uid;
     }
+
+    public Movimiento crearMovimiento(MovimientoId movimientoId, Tipo tipo, Fecha fecha, Saldo saldo, BolsilloId bolsilloId,UsuarioId uid){
+        return new Movimiento(movimientoId,tipo,fecha,saldo,bolsilloId,uid);
+    }
+
+    public String mostrarMovimiento() {
+        return "Movimiento{" +
+                "tipo=" + tipo +
+                ", fecha=" + fecha +
+                ", saldo=" + saldo +
+                ", bolsilloId=" + bolsilloId +
+                ", uid=" + uid +
+                ", entityId=" + entityId +
+                '}';
+    }
+
+    public Movimiento modificarMovimiento(MovimientoId movimientoId, Tipo tipo, Fecha fecha, Saldo saldo, BolsilloId bolsilloId,UsuarioId uid){
+        return new Movimiento(movimientoId,tipo,fecha,saldo,bolsilloId,uid);
+    }
+
+    public String eliminarMovimiento(){
+        String eliminarMovimiento = "El movimiento ha sido eliminado";
+        return  eliminarMovimiento;
+    }
 }

@@ -22,4 +22,21 @@ public class Usuario extends Entity<UsuarioId> {
     public Email getEmail() {
         return email;
     }
+
+    public Usuario crearUsuario(UsuarioId uid, Nombre nombre,Email email){
+        return  new Usuario(uid, nombre, email);
+    }
+
+    public String mostrarUsuario() {
+        return "Usuario{" +
+                "nombre=" + nombre +
+                ", email=" + email +
+                ", entityId=" + entityId +
+                '}';
+    }
+    public String eliminarUsuario(){
+        String usuarioEliminado = "El usuario ha sido eliminado";
+        return usuarioEliminado;
+    }
+
 }
