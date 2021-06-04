@@ -2,12 +2,17 @@ package co.com.finanzas.domain.Model.Bolsillo.values;
 
 import co.com.sofka.domain.generic.ValueObject;
 
-public class Nombre implements ValueObject {
-    public Nombre() {
+import java.util.Objects;
+
+public class Nombre implements ValueObject<String> {
+    public final String value;
+
+    public Nombre(String value) {
+        this.value = Objects.requireNonNull(value);
     }
 
     @Override
-    public Object value() {
-        return null;
+    public String value() {
+        return value;
     }
 }

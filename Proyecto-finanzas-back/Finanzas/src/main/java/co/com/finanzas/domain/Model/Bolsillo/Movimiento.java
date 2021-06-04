@@ -18,4 +18,24 @@ public class Movimiento extends Entity<MovimientoId> {
         this.bolsilloId = bolsilloId;
         this.uid = uid;
     }
+
+    public Tipo getTipo() {
+        return tipo;
+    }
+
+    public Fecha getFecha() {
+        return fecha;
+    }
+
+    public Saldo getSaldo() {
+        return saldo;
+    }
+
+    public BolsilloId getBolsilloId() {
+        return bolsilloId;
+    }
+
+    public UsuarioId getUid() {
+        return uid;
+    }
 }

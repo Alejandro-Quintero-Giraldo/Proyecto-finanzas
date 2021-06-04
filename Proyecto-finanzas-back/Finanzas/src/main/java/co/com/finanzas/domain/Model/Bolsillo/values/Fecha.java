@@ -7,8 +7,8 @@ import java.time.LocalDateTime;
 public class Fecha implements ValueObject<LocalDateTime> {
     public final LocalDateTime value;
 
-    public Fecha(LocalDateTime value) {
-        this.value = value;
+    public Fecha() {
+        this.value = LocalDateTime.now();
     }
 
     @Override

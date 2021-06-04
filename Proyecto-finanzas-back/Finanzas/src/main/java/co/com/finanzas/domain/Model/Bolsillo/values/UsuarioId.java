@@ -10,7 +10,7 @@ public class UsuarioId extends Identity {
     public UsuarioId() {
     }
 
-    public UsuarioId from(String uid){
+    public static UsuarioId from(String uid){
         return new UsuarioId(uid);
     }
 }

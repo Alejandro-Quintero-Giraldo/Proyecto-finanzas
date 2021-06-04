@@ -1,27 +1,42 @@
 package co.com.finanzas.domain.Model.Bolsillo;
 
+import co.com.finanzas.domain.Model.Bolsillo.events.BolsilloCreado;
 import co.com.finanzas.domain.Model.Bolsillo.values.*;
 import co.com.sofka.domain.generic.AggregateEvent;
+import co.com.sofka.domain.generic.DomainEvent;
 
 import java.util.List;
+import java.util.Map;
 
 public class Bolsillo extends AggregateEvent<BolsilloId> {
-    public final BolsilloId bolsilloId;
-    public final Nombre nombre;
-    public final SaldoDisponible saldoDisponible;
-    public final List<Movimiento> movimientos;
-    public final UsuarioId Uid;
-    public final TipoAhorro tipoAhorro;
-    public final PorcentajeAhorro porcentajeAhorro;
+    protected Nombre nombre;
+    protected SaldoDisponible saldoDisponible;
+    protected Map<MovimientoId,Movimiento> movimientos;
+    protected UsuarioId Uid;
+    protected TipoAhorro tipoAhorro;
+    protected PorcentajeAhorro porcentajeAhorro;
 
-    public Bolsillo(BolsilloId entityId, BolsilloId bolsilloId, Nombre nombre, SaldoDisponible saldoDisponible, List<Movimiento> movimientos, UsuarioId uid, TipoAhorro tipoAhorro, PorcentajeAhorro porcentajeAhorro) {
-        super(entityId);
-        this.bolsilloId = bolsilloId;
+    private Bolsillo(BolsilloId bolsilloId){
+        super(bolsilloId);
+        subscribe(new BolsilloChange(this));
+    }
+
+    public Bolsillo(BolsilloId bolsilloId, Nombre nombre, SaldoDisponible saldoDisponible, Map<MovimientoId,Movimiento> movimientos, UsuarioId uid, TipoAhorro tipoAhorro, PorcentajeAhorro porcentajeAhorro) {
+        super(bolsilloId);
         this.nombre = nombre;
         this.saldoDisponible = saldoDisponible;
         this.movimientos = movimientos;
-        Uid = uid;
+        this.Uid = uid;
         this.tipoAhorro = tipoAhorro;
         this.porcentajeAhorro = porcentajeAhorro;
+
+        appendChange(new BolsilloCreado(bolsilloId, nombre, saldoDisponible, movimientos, uid,tipoAhorro,porcentajeAhorro)).apply();
     }
+
+    public static  Bolsillo from(BolsilloId bolsilloId, List<DomainEvent> events){
+        var bolsillo = new Bolsillo(bolsilloId);
+        events.forEach(bolsillo::applyEvent);
+        return  bolsillo;
+    }
+
 }

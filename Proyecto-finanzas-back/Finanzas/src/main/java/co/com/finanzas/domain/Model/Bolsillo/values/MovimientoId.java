@@ -8,9 +8,6 @@ public class MovimientoId extends Identity {
         super(uuid);
     }
 
-    public MovimientoId() {
-    }
-
     public static MovimientoId from(String uuid){
         return new MovimientoId(uuid);
     }

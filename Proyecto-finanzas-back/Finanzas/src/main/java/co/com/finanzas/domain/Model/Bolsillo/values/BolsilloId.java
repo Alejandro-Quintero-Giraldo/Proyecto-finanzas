@@ -10,7 +10,7 @@ public class BolsilloId extends Identity {
     public BolsilloId() {
     }
 
-    public BolsilloId from(String uuid) {
+    public static BolsilloId from(String uuid) {
         return new BolsilloId(uuid);
     }
 }

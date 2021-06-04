@@ -6,10 +6,20 @@ import co.com.finanzas.domain.Model.Bolsillo.values.Nombre;
 import co.com.sofka.domain.generic.Entity;
 
 public class Usuario extends Entity<UsuarioId> {
-    Nombre nombre;
-    Email email;
+    public final Nombre nombre;
+    public final Email email;
 
-    public Usuario(UsuarioId entityId) {
+    public Usuario(UsuarioId entityId, Nombre nombre, Email email) {
         super(entityId);
+        this.nombre = nombre;
+        this.email = email;
+    }
+
+    public Nombre getNombre() {
+        return nombre;
+    }
+
+    public Email getEmail() {
+        return email;
     }
 }
