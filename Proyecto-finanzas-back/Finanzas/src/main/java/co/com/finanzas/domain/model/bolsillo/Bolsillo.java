@@ -48,8 +48,8 @@ public class Bolsillo extends AggregateEvent<BolsilloId> {
         appendChange(new DineroIngresado(movimiento.identity(),movimiento.getTipo(),movimiento.getFecha(),movimiento.getSaldo(),movimiento.getUid())).apply();
     }
 
-    public void sacarDinero(BolsilloId bolsilloId, Nombre nombre, SaldoDisponible saldoDisponible, Map<MovimientoId,Movimiento> movimientos, UsuarioId uid, EsAhorro esAhorro, PorcentajeAhorro porcentajeAhorro){
-        appendChange(new DineroSacado(bolsilloId, nombre, saldoDisponible, movimientos, uid, esAhorro, porcentajeAhorro)).apply();
+    public void sacarDinero(Movimiento movimiento){
+        appendChange(new DineroSacado(movimiento.identity(), movimiento.getTipo(), movimiento.getFecha(),movimiento.getSaldo(),movimiento.getUid())).apply();
     }
 
 

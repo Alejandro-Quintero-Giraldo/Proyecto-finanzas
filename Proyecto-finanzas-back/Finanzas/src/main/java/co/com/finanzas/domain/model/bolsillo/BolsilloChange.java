@@ -19,10 +19,10 @@ public class BolsilloChange extends EventChange {
         });
 
         apply((BolsilloEliminado event)->{
-            /*if (bolsillo.saldoDisponible.value > 0){
+            if (bolsillo.saldoDisponible.value > 0){
                 throw  new IllegalArgumentException("No puedes eliminar un bolsillo, si tienes saldo disponible dentro de él");
             }
-            bolsillo.eliminarBolsillo(event.getBolsilloId(),
+            /*bolsillo.eliminarBolsillo(event.getBolsilloId(),
                     event.getNombre(),
                     event.getSaldoDisponible(),
                     event.getMovimientos(),
@@ -42,11 +42,24 @@ public class BolsilloChange extends EventChange {
                     event.getBolsilloId(),
                     event.getUid()
                     ));
+            bolsillo.saldoDisponible.AumentarSaldo(event.getSaldo().value());
 
         });
 
         apply((DineroSacado event)-> {
-            bolsillo.saldoDisponible.DisminuirSaldo(event.saldoDisponible.value);
+
+            if (bolsillo.saldoDisponible.value() < event.getSaldo().value()){
+                throw new IllegalArgumentException("ERROR: El valor a sacar supera el saldo disponible");
+            }
+            bolsillo.movimientos.put(event.getMovimientoId(),new Movimiento(
+                    event.getMovimientoId(),
+                    event.getTipo(),
+                    event.getFecha(),
+                    event.getSaldo(),
+                    event.getBolsilloId(),
+                    event.getUid()
+            ));
+            bolsillo.saldoDisponible.DisminuirSaldo(event.getSaldo().value());
         });
     }
 }

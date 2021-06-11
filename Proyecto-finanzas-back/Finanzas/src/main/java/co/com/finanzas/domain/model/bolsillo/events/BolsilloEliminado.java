@@ -6,6 +6,7 @@ import co.com.finanzas.domain.model.bolsillo.values.*;
 import co.com.sofka.domain.generic.DomainEvent;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class BolsilloEliminado extends DomainEvent {
     private final EsEliminado esEliminado;
@@ -15,6 +16,19 @@ public class BolsilloEliminado extends DomainEvent {
         super("finanzas.bolsillo.eliminado");
         this.esEliminado = esEliminado;
         aggregateRootId();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BolsilloEliminado that = (BolsilloEliminado) o;
+        return Objects.equals(esEliminado, that.esEliminado);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(esEliminado);
     }
 
     public BolsilloId getBolsilloId() {

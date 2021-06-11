@@ -5,53 +5,58 @@ import co.com.finanzas.domain.model.bolsillo.values.*;
 import co.com.sofka.domain.generic.DomainEvent;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class DineroSacado extends DomainEvent {
-    public final BolsilloId bolsilloId;
-    public Nombre nombre;
-    public SaldoDisponible saldoDisponible;
-    public final Map<MovimientoId, Movimiento> movimientos;
-    public final UsuarioId uId;
-    public final EsAhorro esAhorro;
-    public PorcentajeAhorro porcentajeAhorro;
-
-
-    public DineroSacado(BolsilloId bolsilloId, Nombre nombre, SaldoDisponible saldoDisponible, Map<MovimientoId, Movimiento> movimientos, UsuarioId uId, EsAhorro esAhorro, PorcentajeAhorro porcentajeAhorro) {
+    private final MovimientoId movimientoId;
+    private final Tipo tipo;
+    private final Fecha fecha;
+    private final Saldo saldo;
+    private final UsuarioId uid;
+    public DineroSacado(MovimientoId movimientoId, Tipo tipo, Fecha fecha, Saldo saldo, UsuarioId uid){
         super("finanzas.dinero.sacado");
-        this.bolsilloId = bolsilloId;
-        this.nombre = nombre;
-        this.saldoDisponible = saldoDisponible;
-        this.movimientos = movimientos;
-        this.uId = uId;
-        this.esAhorro = esAhorro;
-        this.porcentajeAhorro = porcentajeAhorro;
+        this.movimientoId=movimientoId;
+        this.tipo=tipo;
+        this.fecha=fecha;
+        this.saldo = saldo;
+        this.uid = uid;
+        aggregateRootId();
     }
 
-    public BolsilloId getBolsilloId() {
-        return bolsilloId;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DineroSacado that = (DineroSacado) o;
+        return Objects.equals(movimientoId, that.movimientoId) && Objects.equals(tipo, that.tipo) && Objects.equals(fecha, that.fecha) && Objects.equals(saldo, that.saldo) && Objects.equals(uid, that.uid);
     }
 
-    public Nombre getNombre() {
-        return nombre;
+    @Override
+    public int hashCode() {
+        return Objects.hash(movimientoId, tipo, fecha, saldo, uid);
     }
 
-    public SaldoDisponible getSaldoDisponible() {
-        return saldoDisponible;
+    public MovimientoId getMovimientoId() {
+        return movimientoId;
     }
 
-    public Map<MovimientoId, Movimiento> getMovimientos() {
-        return movimientos;
+    public BolsilloId getBolsilloId(){
+        return BolsilloId.of(aggregateRootId());
     }
 
-    public UsuarioId getuId() {
-        return uId;
+    public Tipo getTipo() {
+        return tipo;
     }
 
-    public EsAhorro getTipoAhorro() {
-        return esAhorro;
+    public Fecha getFecha() {
+        return fecha;
     }
 
-    public PorcentajeAhorro getPorcentajeAhorro() {
-        return porcentajeAhorro;
+    public Saldo getSaldo() {
+        return saldo;
+    }
+
+    public UsuarioId getUid() {
+        return uid;
     }
 }

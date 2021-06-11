@@ -25,6 +25,6 @@ public class MongoDomainEventRepository implements DomainEventRepository {
 
     @Override
     public List<DomainEvent> getEventsBy(String s, String s1) {
-        return mongoTemplate.find(Query.query(Criteria.where("").is(Boolean.TRUE)));
+        return mongoTemplate.find(Query.query(Criteria.where("esEliminado").is(Boolean.TRUE)));
     }
 }
