@@ -1,30 +1,23 @@
 package co.com.finanzas.domain.model.bolsillo.comands;
 
-
-import co.com.finanzas.domain.model.bolsillo.Movimiento;
 import co.com.finanzas.domain.model.bolsillo.values.*;
 import co.com.sofka.domain.generic.Command;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class CrearBolsillo implements Command {
+public class CrearAhorroAutomatico implements Command {
     private final BolsilloId bolsilloId;
     private final Nombre nombre;
     private final SaldoDisponible saldoDisponible;
-    private final Map<MovimientoId, Movimiento> movimientos;
-    private final UsuarioId uId;
+    private final UsuarioId uid;
     private final EsAhorro esAhorro;
     private final PorcentajeAhorro porcentajeAhorro;
 
-    public CrearBolsillo(BolsilloId bolsilloId, Nombre nombre, UsuarioId uId, PorcentajeAhorro porcentajeAhorro) {
+    public CrearAhorroAutomatico(BolsilloId bolsilloId, UsuarioId uid) {
         this.bolsilloId = bolsilloId;
-        this.nombre = nombre;
+        this.nombre = new Nombre("Ahorro");
         this.saldoDisponible = SaldoDisponible.inicializarSaldo();
-        this.movimientos = new HashMap<>();
-        this.uId = uId;
-        this.esAhorro = EsAhorro.noEsAhorro();
-        this.porcentajeAhorro = porcentajeAhorro;
+        this.uid = uid;
+        this.esAhorro = new EsAhorro(Boolean.TRUE);
+        this.porcentajeAhorro = new PorcentajeAhorro(0);
     }
 
     public BolsilloId getBolsilloId() {
@@ -36,23 +29,18 @@ public class CrearBolsillo implements Command {
     }
 
     public SaldoDisponible getSaldoDisponible() {
-        return this.saldoDisponible;
+        return saldoDisponible;
     }
 
-    public Map<MovimientoId, Movimiento> getMovimientos() {
-        return this.movimientos;
-    }
-
-    public UsuarioId getuId() {
-        return uId;
+    public UsuarioId getUid() {
+        return uid;
     }
 
     public EsAhorro getEsAhorro() {
-        return this.esAhorro;
+        return esAhorro;
     }
 
     public PorcentajeAhorro getPorcentajeAhorro() {
         return porcentajeAhorro;
     }
-
 }

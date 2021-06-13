@@ -52,7 +52,6 @@ public class Bolsillo extends AggregateEvent<BolsilloId> {
         appendChange(new DineroSacado(movimiento.identity(), movimiento.getTipo(), movimiento.getFecha(),movimiento.getSaldo(),movimiento.getUid())).apply();
     }
 
-
     public static  Bolsillo from(BolsilloId bolsilloId, List<DomainEvent> events){
         var bolsillo = new Bolsillo(bolsilloId);
         events.forEach(bolsillo::applyEvent);

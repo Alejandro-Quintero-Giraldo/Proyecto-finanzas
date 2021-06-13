@@ -1,7 +1,5 @@
 package co.com.finanzas.domain.infra;
 
-import co.com.finanzas.domain.model.bolsillo.Bolsillo;
-import co.com.finanzas.domain.model.bolsillo.events.BolsilloEliminado;
 import co.com.sofka.business.repository.DomainEventRepository;
 import co.com.sofka.domain.generic.DomainEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +22,9 @@ public class MongoDomainEventRepository implements DomainEventRepository {
     }
 
     @Override
-    public List<DomainEvent> getEventsBy(String s, String s1) {
-        return mongoTemplate.find(Query.query(Criteria.where("esEliminado").is(Boolean.TRUE)));
+    public List<DomainEvent> getEventsBy(String nombreAgregado, String bolsilloId) {
+        return mongoTemplate.find(
+                Query.query(Criteria.where("_id").is(bolsilloId)), DomainEvent.class,nombreAgregado
+        );
     }
 }

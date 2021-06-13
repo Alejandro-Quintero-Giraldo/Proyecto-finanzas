@@ -42,6 +42,4 @@ class IngresarDineroUseCaseTest {
                 .expectNextMatches(domainEvent -> domainEvent.equals(event))
                 .expectComplete();
     }
-
-
 }

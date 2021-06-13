@@ -9,7 +9,9 @@ import co.com.sofka.domain.generic.EventChange;
 public class BolsilloChange extends EventChange {
         public BolsilloChange(Bolsillo bolsillo){
         apply((BolsilloCreado event) ->{
-
+            if(event.getPorcentajeAhorro().value() < 1 || event.getPorcentajeAhorro().value() > 99) {
+                throw new IllegalArgumentException("Debes ingresar un porcentaje de Ahorro entre 1 y 99");
+            }
             bolsillo.nombre = event.getNombre();
             bolsillo.saldoDisponible = event.getSaldoDisponible();
             bolsillo.movimientos = event.getMovimientos();

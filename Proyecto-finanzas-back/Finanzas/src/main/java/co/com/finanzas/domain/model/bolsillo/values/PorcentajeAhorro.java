@@ -8,8 +8,8 @@ public class PorcentajeAhorro implements ValueObject<Integer> {
     public final Integer value;
 
     public PorcentajeAhorro(Integer value) {
-        if (value > 99 || value < 1){
-            throw new IllegalArgumentException("No se pueden ingresar porcentajes mayores a 99 y menores a 1");
+        if (value > 99 || value < 0){
+            throw new IllegalArgumentException("No se pueden ingresar porcentajes mayores a 99 y menores a 0");
         }
         this.value = Objects.requireNonNull(value);
     }
