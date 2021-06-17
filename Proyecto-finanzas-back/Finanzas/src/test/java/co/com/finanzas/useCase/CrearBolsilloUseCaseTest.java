@@ -44,5 +44,4 @@ class CrearBolsilloUseCaseTest {
                 .expectNextMatches(domainEvent -> domainEvent.equals(event))
                 .expectComplete();
     }
-
 }

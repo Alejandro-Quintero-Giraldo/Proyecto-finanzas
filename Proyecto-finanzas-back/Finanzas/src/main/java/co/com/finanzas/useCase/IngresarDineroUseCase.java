@@ -15,10 +15,11 @@ import co.com.sofka.business.support.ResponseEvents;
 import co.com.sofka.domain.generic.DomainEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
 import java.util.function.Function;
-@Component
+@Service
 public class IngresarDineroUseCase implements Function<IngresarDinero, Flux<DomainEvent>>{
 
     @Autowired
@@ -34,8 +35,8 @@ public class IngresarDineroUseCase implements Function<IngresarDinero, Flux<Doma
                 ingresarDinero.getBolsilloId(),
                 ingresarDinero.getUid()
                 );
-        //TODO: Encontrar el método para retornar el List<DomainEvent>
-        var bolsillo = Bolsillo.from(ingresarDinero.getBolsilloId(),repository.getEventsBy("Bolsillo",ingresarDinero.getBolsilloId().value()));
+        //TODO: arreglar el MongoDomainEvent con
+        var bolsillo = Bolsillo.from(ingresarDinero.getBolsilloId(),repository.getEventsBy(ingresarDinero.getBolsilloId().value(),"Bolsillo"));
         bolsillo.ingresarDinero(movimiento);
         return  Flux.fromIterable(bolsillo.getUncommittedChanges());
     }

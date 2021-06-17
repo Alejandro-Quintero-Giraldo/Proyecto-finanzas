@@ -6,22 +6,18 @@ import co.com.finanzas.domain.model.bolsillo.values.Nombre;
 import co.com.finanzas.domain.model.bolsillo.values.UsuarioId;
 import co.com.sofka.domain.generic.Command;
 
-public class CrearUsuario implements Command {
+public class EliminarUsuario implements Command {
     private final UsuarioId uid;
     private final Nombre nombre;
     private final Email email;
-    private  final EsEliminado esEliminado;
+    private final EsEliminado esEliminado;
 
 
-    public CrearUsuario(UsuarioId uid, Nombre nombre, Email email) {
+    public EliminarUsuario(UsuarioId uid, Nombre nombre, Email email) {
         this.uid = uid;
         this.nombre = nombre;
         this.email = email;
-        this.esEliminado = new EsEliminado(Boolean.FALSE);
-    }
-
-    public EsEliminado getEsEliminado() {
-        return esEliminado;
+        this.esEliminado = new EsEliminado(Boolean.TRUE);
     }
 
     public UsuarioId getUid() {
@@ -34,5 +30,9 @@ public class CrearUsuario implements Command {
 
     public Email getEmail() {
         return email;
+    }
+
+    public EsEliminado getEsEliminado() {
+        return esEliminado;
     }
 }

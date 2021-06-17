@@ -7,11 +7,12 @@ import co.com.finanzas.domain.model.bolsillo.events.DineroSacado;
 import co.com.finanzas.domain.model.bolsillo.values.*;
 import co.com.sofka.domain.generic.AggregateEvent;
 import co.com.sofka.domain.generic.DomainEvent;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@Document(collation="Bolsillo")
 public class Bolsillo extends AggregateEvent<BolsilloId> {
     protected Nombre nombre;
     protected SaldoDisponible saldoDisponible;

@@ -9,11 +9,12 @@ import co.com.sofka.business.repository.DomainEventRepository;
 import co.com.sofka.domain.generic.DomainEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
 import java.util.function.Function;
 
-@Component
+@Service
 public class EliminarBolsilloUseCase implements Function<EliminarBolsillo, Flux<DomainEvent>>{
     @Autowired
     DomainEventRepository repository;
@@ -22,6 +23,12 @@ public class EliminarBolsilloUseCase implements Function<EliminarBolsillo, Flux<
     public Flux<DomainEvent> apply(EliminarBolsillo eliminarBolsillo){
        var bolsillo = Bolsillo.from(eliminarBolsillo.getBolsilloId(),repository.getEventsBy("Bolsillo",eliminarBolsillo.getBolsilloId().value()));
         bolsillo.eliminarBolsillo(eliminarBolsillo.getEsEliminado());
+
         return Flux.fromIterable(bolsillo.getUncommittedChanges());
+
+    }
+
+    public static class Response implements  {
+
     }
 }

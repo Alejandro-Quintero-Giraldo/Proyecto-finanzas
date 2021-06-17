@@ -10,11 +10,12 @@ import co.com.sofka.business.support.ResponseEvents;
 import co.com.sofka.domain.generic.DomainEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
 import java.util.function.Function;
 
-@Component
+@Service
 public class SacarDineroUseCase implements Function<SacarDinero, Flux<DomainEvent>>{
 
     @Autowired

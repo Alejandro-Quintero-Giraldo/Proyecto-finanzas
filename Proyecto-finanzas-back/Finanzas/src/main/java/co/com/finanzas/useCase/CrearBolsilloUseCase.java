@@ -4,10 +4,11 @@ import co.com.finanzas.domain.model.bolsillo.Bolsillo;
 import co.com.finanzas.domain.model.bolsillo.comands.CrearBolsillo;
 import co.com.sofka.domain.generic.DomainEvent;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
 import java.util.function.Function;
-@Component
+@Service
 public class CrearBolsilloUseCase implements Function<CrearBolsillo, Flux<DomainEvent>> {
     @Override
     public Flux<DomainEvent> apply(CrearBolsillo crearBolsillo){
