@@ -20,8 +20,8 @@ import reactor.core.publisher.Flux;
 
 import java.util.function.Function;
 @Service
-public class IngresarDineroUseCase implements Function<IngresarDinero, Flux<DomainEvent>>{
-
+public class IngresarDineroUseCase{ //implements Function<IngresarDinero, Flux<DomainEvent>>{
+/*
     @Autowired
     DomainEventRepository repository;
 
@@ -39,5 +39,5 @@ public class IngresarDineroUseCase implements Function<IngresarDinero, Flux<Doma
         var bolsillo = Bolsillo.from(ingresarDinero.getBolsilloId(),repository.getEventsBy(ingresarDinero.getBolsilloId().value(),"Bolsillo"));
         bolsillo.ingresarDinero(movimiento);
         return  Flux.fromIterable(bolsillo.getUncommittedChanges());
-    }
+    }*/
 }

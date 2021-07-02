@@ -6,9 +6,11 @@ import co.com.finanzas.domain.model.bolsillo.values.UsuarioId;
 import co.com.finanzas.domain.model.bolsillo.values.Nombre;
 import co.com.sofka.domain.generic.DomainEvent;
 import co.com.sofka.domain.generic.Entity;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
+@Document(collation = "Usuario")
 public class Usuario extends Entity<UsuarioId> {
     public final Nombre nombre;
     public final Email email;
@@ -20,9 +22,6 @@ public class Usuario extends Entity<UsuarioId> {
         this.email = email;
         this.esEliminado = esEliminado;
     }
-
-
-
 
     public EsEliminado getEsEliminado() {
         return esEliminado;

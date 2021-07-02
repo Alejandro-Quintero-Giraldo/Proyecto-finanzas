@@ -6,14 +6,16 @@ import co.com.finanzas.domain.model.bolsillo.events.DineroIngresado;
 import co.com.finanzas.domain.model.bolsillo.events.DineroSacado;
 import co.com.finanzas.domain.model.bolsillo.values.*;
 import co.com.sofka.domain.generic.AggregateEvent;
+import co.com.sofka.domain.generic.AggregateRoot;
 import co.com.sofka.domain.generic.DomainEvent;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-@Document(collation="Bolsillo")
-public class Bolsillo extends AggregateEvent<BolsilloId> {
+
+@Document(collation = "Bolsillo")
+public class Bolsillo extends AggregateRoot<BolsilloId> {
     protected Nombre nombre;
     protected SaldoDisponible saldoDisponible;
     protected Map<MovimientoId, Movimiento> movimientos;
@@ -22,11 +24,6 @@ public class Bolsillo extends AggregateEvent<BolsilloId> {
     protected PorcentajeAhorro porcentajeAhorro;
     protected EsEliminado esEliminado;
 
-    private Bolsillo(BolsilloId bolsilloId){
-        super(bolsilloId);
-        subscribe(new BolsilloChange(this));
-    }
-
     public Bolsillo(BolsilloId bolsilloId, Nombre nombre,SaldoDisponible saldoDisponible ,UsuarioId uid, EsAhorro esAhorro, PorcentajeAhorro porcentajeAhorro) {
         super(bolsilloId);
         this.nombre = nombre;
@@ -34,29 +31,37 @@ public class Bolsillo extends AggregateEvent<BolsilloId> {
         this.Uid = uid;
         this.esAhorro = esAhorro;
         this.porcentajeAhorro = porcentajeAhorro;
-
-        appendChange(new BolsilloCreado( nombre, SaldoDisponible.inicializarSaldo(), new HashMap<>(),uid, esAhorro,porcentajeAhorro)).apply();
-
     }
 
-    public void eliminarBolsillo(EsEliminado esEliminado){
+    public void EliminarBolsillo(EsEliminado esEliminado){
         this.esEliminado = esEliminado;
-        appendChange(new BolsilloEliminado(esEliminado)).apply();
     }
 
-    public void ingresarDinero(Movimiento movimiento){
-        this.movimientos.put(movimiento.identity(),movimiento);
-        appendChange(new DineroIngresado(movimiento.identity(),movimiento.getTipo(),movimiento.getFecha(),movimiento.getSaldo(),movimiento.getUid())).apply();
+    public Nombre getNombre() {
+        return nombre;
     }
 
-    public void sacarDinero(Movimiento movimiento){
-        appendChange(new DineroSacado(movimiento.identity(), movimiento.getTipo(), movimiento.getFecha(),movimiento.getSaldo(),movimiento.getUid())).apply();
+    public SaldoDisponible getSaldoDisponible() {
+        return saldoDisponible;
     }
 
-    public static  Bolsillo from(BolsilloId bolsilloId, List<DomainEvent> events){
-        var bolsillo = new Bolsillo(bolsilloId);
-        events.forEach(bolsillo::applyEvent);
-        return  bolsillo;
+    public Map<MovimientoId, Movimiento> getMovimientos() {
+        return movimientos;
     }
 
+    public UsuarioId getUid() {
+        return Uid;
+    }
+
+    public EsAhorro getEsAhorro() {
+        return esAhorro;
+    }
+
+    public PorcentajeAhorro getPorcentajeAhorro() {
+        return porcentajeAhorro;
+    }
+
+    public EsEliminado getEsEliminado() {
+        return esEliminado;
+    }
 }

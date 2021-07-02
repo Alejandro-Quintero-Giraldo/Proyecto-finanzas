@@ -1,5 +1,6 @@
 package co.com.finanzas.useCase;
 
+import co.com.finanzas.domain.infra.repository.IMovimientoRepository;
 import co.com.finanzas.domain.model.bolsillo.Bolsillo;
 import co.com.finanzas.domain.model.bolsillo.Movimiento;
 import co.com.finanzas.domain.model.bolsillo.comands.SacarDinero;
@@ -16,23 +17,19 @@ import reactor.core.publisher.Flux;
 import java.util.function.Function;
 
 @Service
-public class SacarDineroUseCase implements Function<SacarDinero, Flux<DomainEvent>>{
+public class SacarDineroUseCase extends UseCase<RequestCommand<SacarDinero>, SacarDineroUseCase.Response>{
 
     @Autowired
-    DomainEventRepository repository;
+    IMovimientoRepository iMovimientoRepository;
+
 
     @Override
-    public Flux<DomainEvent> apply(SacarDinero sacarDinero) {
-        var movimiento = new Movimiento(
-                sacarDinero.getMovimientoId(),
-                sacarDinero.getTipo(),
-                sacarDinero.getFecha(),
-                sacarDinero.getSaldo(),
-                sacarDinero.getBolsilloId(),
-                sacarDinero.getUid()
-        );
-        var bolsillo = Bolsillo.from(sacarDinero.getBolsilloId(),repository.getEventsBy("Bolsillo",sacarDinero.getBolsilloId().value()));
-        bolsillo.sacarDinero(movimiento);
-        return Flux.fromIterable(bolsillo.getUncommittedChanges());
+    public void executeUseCase(RequestCommand<SacarDinero> sacarDineroRequestCommand) {
+
+    }
+
+    public static class Response implements UseCase.ResponseValues{
+
     }
 }
+
