@@ -37,5 +37,4 @@ public class EliminarBolsilloUseCase extends UseCase<RequestCommand<EliminarBols
     public class Response implements UseCase.ResponseValues{
 
     }
-
 }

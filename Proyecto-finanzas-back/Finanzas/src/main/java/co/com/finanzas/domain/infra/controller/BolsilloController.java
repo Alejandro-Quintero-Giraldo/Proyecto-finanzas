@@ -41,12 +41,13 @@ public class BolsilloController {
                 new PorcentajeAhorro(porcentajeAhorro));
 
         CrearBolsilloUseCase.Response bolsilloCreado = executedCrearBolsilloUseCase(command);
-        String string = "{" + "\"BolsilloId\":"+ bolsilloCreado.getResponse().getIdPro()+"\""+","
-                +"\"Nombre\":"+bolsilloCreado.getResponse().getNombre().value()+"\""+","
-                +"\"Saldo disponible\":"+bolsilloCreado.getResponse().getSaldoDisponible().value()+"\""+","
-                +"\"UsuarioId\":"+bolsilloCreado.getResponse().getUid().value()+"\""+","
-                +"\"¿Es Ahorro?\":"+bolsilloCreado.getResponse().getEsAhorro().value()+"\""+","
-                +"\"Porcentaje de ahorro\":"+bolsilloCreado.getResponse().getPorcentajeAhorro().value()+"}";
+        String string = "{" + "\"BolsilloId\":"+ "\""+bolsilloCreado.getResponse().getIdPro()+"\""+","
+                +"\"Nombre\":"+"\""+bolsilloCreado.getResponse().getNombre().value()+"\""+","
+                +"\"Saldo disponible\":"+"\""+bolsilloCreado.getResponse().getSaldoDisponible().value()+"\""+","
+                +"\"UsuarioId\":"+"\""+bolsilloCreado.getResponse().getUid().value()+"\""+","
+                +"\"¿Es Ahorro?\":"+"\""+bolsilloCreado.getResponse().getEsAhorro().value()+"\""+","
+                +"\"Porcentaje de ahorro\":"+"\""+bolsilloCreado.getResponse().getPorcentajeAhorro().value()
+                +"}";
 
         return string;
     }
@@ -68,12 +69,12 @@ public class BolsilloController {
         var command = new ActualizarBolsillo(BolsilloId.of(id), new Nombre(nombre), new SaldoDisponible(saldoDisponible), UsuarioId.of(uid), new EsAhorro(esAhorro), new PorcentajeAhorro(porcentajeAhorro));
         ActualizarBolsilloUseCase.Response bolsilloActualizado = executedActualizarBolsilloUseCase(command);
 
-        String string = "{" + "\"BolsilloId\":"+ bolsilloActualizado.getResponse().getIdPro()+"\""+","
-                +"\"Nombre\":"+bolsilloActualizado.getResponse().getNombre().value()+"\""+","
-                +"\"Saldo disponible\":"+bolsilloActualizado.getResponse().getSaldoDisponible().value()+"\""+","
-                +"\"UsuarioId\":"+bolsilloActualizado.getResponse().getUid().value()+"\""+","
-                +"\"¿Es Ahorro?\":"+bolsilloActualizado.getResponse().getEsAhorro().value()+"\""+","
-                +"\"Porcentaje de ahorro\":"+bolsilloActualizado.getResponse().getPorcentajeAhorro().value()+"}";
+        String string = "{" + "\"BolsilloId\":"+ "\""+bolsilloActualizado.getResponse().getIdPro()+"\""+","
+                +"\"Nombre\":"+ "\""+bolsilloActualizado.getResponse().getNombre().value()+"\""+","
+                +"\"Saldo disponible\":"+"\""+bolsilloActualizado.getResponse().getSaldoDisponible().value()+"\""+","
+                +"\"UsuarioId\":"+"\""+bolsilloActualizado.getResponse().getUid().value()+"\""+","
+                +"\"¿Es Ahorro?\":"+"\""+bolsilloActualizado.getResponse().getEsAhorro().value()+"\""+","
+                +"\"Porcentaje de ahorro\":"+"\""+bolsilloActualizado.getResponse().getPorcentajeAhorro().value()+"}";
 
         return string;
     }
@@ -82,7 +83,7 @@ public class BolsilloController {
         var events = UseCaseHandler.getInstance()
                 .syncExecutor(actualizarBolsilloUseCase, new RequestCommand<>(command)).orElseThrow();
         var bolsilloActualizado = events;
-        return (ActualizarBolsilloUseCase.Response) bolsilloActualizado;
+        return  bolsilloActualizado;
     }
 
     @GetMapping(value = "api/mostrarBolsillos")

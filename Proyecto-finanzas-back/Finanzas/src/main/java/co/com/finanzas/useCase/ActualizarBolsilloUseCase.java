@@ -8,17 +8,19 @@ import co.com.finanzas.domain.model.bolsillo.comands.ActualizarBolsillo;
 import co.com.sofka.business.generic.UseCase;
 import co.com.sofka.business.support.RequestCommand;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ActualizarBolsilloUseCase extends UseCase<RequestCommand<ActualizarBolsillo>, ActualizarBolsilloUseCase.Response> {
 
     @Autowired
-    private IBolsilloDataRepository iBolsilloDataRepository;
+    private IBolsilloDataRepository data;
 
     @Override
     public void executeUseCase(RequestCommand<ActualizarBolsillo> actualizarBolsilloRequestCommand) {
         var command = actualizarBolsilloRequestCommand.getCommand();
         var bolsillo = new Bolsillo(command.getBolsilloId(), command.getNombre(),command.getSaldoDisponible(), command.getUid(),command.getEsAhorro(),command.getPorcentajeAhorro());
-        iBolsilloDataRepository.save(transformar(bolsillo));
+        data.save(transformar(bolsillo));
         emit().onResponse(new Response(bolsillo));
     }
 

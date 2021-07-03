@@ -1,6 +1,7 @@
 package co.com.finanzas.useCase;
 
 import co.com.finanzas.domain.infra.repository.IUsuarioDataRepository;
+import co.com.finanzas.domain.infra.repository.UsuarioData;
 import co.com.finanzas.domain.model.bolsillo.Usuario;
 import co.com.finanzas.domain.model.bolsillo.comands.CrearUsuario;
 import co.com.finanzas.domain.model.bolsillo.events.UsuarioCreado;
@@ -28,7 +29,13 @@ public class CrearUsuarioUseCase extends UseCase<RequestCommand<CrearUsuario>, C
 
         var usuario = new Usuario(crearUsuario.getUid(), crearUsuario.getNombre(), crearUsuario.getEmail(), crearUsuario.getEsEliminado());
 
-        iUsuarioRepository.save(usuario);
+        iUsuarioRepository.save(transformar(usuario));
+        emit().onResponse(new Response(usuario));
+    }
+
+    public UsuarioData transformar(Usuario usuario){
+        UsuarioData usuarioData = new UsuarioData(usuario.identity().value(),usuario.getNombre().value(), usuario.getEmail().value());
+        return usuarioData;
     }
 
     public static class Response implements UseCase.ResponseValues{

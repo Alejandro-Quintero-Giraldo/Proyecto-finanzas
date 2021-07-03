@@ -14,10 +14,7 @@ public class TransformacionUsuarioUseCase {
     @Autowired
     private IUsuarioDataRepository data;
 
-    public UsuarioData transformar(Usuario usuario){
-        UsuarioData usuarioData = new UsuarioData(usuario.identity().value(),usuario.getNombre().value(), usuario.getEmail().value());
-        return usuarioData;
-    }
+
 
     public Iterable<UsuarioData> listar(){
         return data.findAll();
