@@ -10,7 +10,8 @@ import java.util.Map;
 public class BolsilloData {
 
     @Id
-    protected String bolsilloId;
+    protected String id;
+
     protected String nombre;
     protected Integer saldoDisponible;
     protected Boolean esAhorro;
@@ -18,8 +19,8 @@ public class BolsilloData {
     protected Map<String, Movimiento> movimientos;
     protected Integer porcentajeAhorro;
 
-    public BolsilloData(String bolsilloId, String nombre, Integer saldoDisponible, String uid, Boolean esAhorro, Integer porcentajeAhorro){
-        this.bolsilloId = bolsilloId;
+    public BolsilloData(String id, String nombre, Integer saldoDisponible, String uid, Boolean esAhorro, Integer porcentajeAhorro){
+        this.id = id;
         this.nombre = nombre;
         this.saldoDisponible = saldoDisponible;
         this.uid = uid;
@@ -30,12 +31,12 @@ public class BolsilloData {
     public BolsilloData(){
     }
 
-    public String getBolsilloId() {
-        return bolsilloId;
+    public String getId() {
+        return id;
     }
 
-    public void setBolsilloId(String bolsilloId) {
-        this.bolsilloId = bolsilloId;
+    public void setId(String idPro) {
+        this.id = idPro;
     }
 
     public String getNombre() {

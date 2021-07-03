@@ -2,26 +2,28 @@ package co.com.finanzas.useCase;
 
 import co.com.finanzas.domain.infra.repository.BolsilloData;
 import co.com.finanzas.domain.infra.repository.IBolsilloDataRepository;
+import co.com.finanzas.domain.infra.repository.IUsuarioDataRepository;
+import co.com.finanzas.domain.infra.repository.UsuarioData;
 import co.com.finanzas.domain.model.bolsillo.Bolsillo;
+import co.com.finanzas.domain.model.bolsillo.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TransformacionBolsilloUseCase {
-
+public class TransformacionUsuarioUseCase {
     @Autowired
-    private IBolsilloDataRepository data;
+    private IUsuarioDataRepository data;
 
-    public BolsilloData transformar(Bolsillo bolsillo){
-        BolsilloData bolsilloData = new BolsilloData(bolsillo.getIdPro(),bolsillo.getNombre().value(), bolsillo.getSaldoDisponible().value(),bolsillo.getUid().value(),bolsillo.getEsAhorro().value(),bolsillo.getPorcentajeAhorro().value());
-        return bolsilloData;
+    public UsuarioData transformar(Usuario usuario){
+        UsuarioData usuarioData = new UsuarioData(usuario.identity().value(),usuario.getNombre().value(), usuario.getEmail().value());
+        return usuarioData;
     }
 
-    public Iterable<BolsilloData> listar(){
+    public Iterable<UsuarioData> listar(){
         return data.findAll();
     }
 
-    public BolsilloData listarPorId(String id){
+    public UsuarioData listarPorId(String id){
         return  data.findById(id).orElseThrow(RuntimeException::new);
     }
 

@@ -1,6 +1,6 @@
 package co.com.finanzas.useCase;
 
-import co.com.finanzas.domain.infra.repository.IBolsilloRepository;
+import co.com.finanzas.domain.infra.repository.IBolsilloDataRepository;
 import co.com.finanzas.domain.model.bolsillo.Bolsillo;
 import co.com.finanzas.domain.model.bolsillo.BolsilloBuilder;
 import co.com.finanzas.domain.model.bolsillo.comands.EliminarBolsillo;
@@ -20,7 +20,7 @@ import java.util.function.Function;
 @Service
 public class EliminarBolsilloUseCase extends UseCase<RequestCommand<EliminarBolsillo>, EliminarBolsilloUseCase.Response> {
     @Autowired
-    IBolsilloRepository iBolsilloRepository;
+    IBolsilloDataRepository iBolsilloRepository;
 
     @Override
     public void executeUseCase(RequestCommand<EliminarBolsillo> eliminarBolsilloRequestCommand) {

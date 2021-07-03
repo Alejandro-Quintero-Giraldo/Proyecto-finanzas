@@ -27,27 +27,28 @@ public class BolsilloController {
     @Autowired
     private TransformacionBolsilloUseCase transformacionBolsilloUseCase;
 
-    @PostMapping(value = "api/crearbolsillo/{id}/{nombre}/{uid}/{porcentajeAhorro}")
+    @PostMapping(value = "api/crearbolsillo/{bolsilloId}/{nombre}/{uid}/{porcentajeAhorro}")
     public String saveBolsillo(
-            @PathVariable("id")String id,
+            @PathVariable("bolsilloId")String bolsilloId,
             @PathVariable("nombre")String nombre,
             @PathVariable("uid")String uid,
             @PathVariable("porcentajeAhorro")Integer porcentajeAhorro){
 
         var command = new CrearBolsillo(
-                BolsilloId.of(id),
+                BolsilloId.of(bolsilloId),
                 new Nombre(nombre),
                 UsuarioId.of(uid),
                 new PorcentajeAhorro(porcentajeAhorro));
 
         CrearBolsilloUseCase.Response bolsilloCreado = executedCrearBolsilloUseCase(command);
+        String string = "{" + "\"BolsilloId\":"+ bolsilloCreado.getResponse().getIdPro()+"\""+","
+                +"\"Nombre\":"+bolsilloCreado.getResponse().getNombre().value()+"\""+","
+                +"\"Saldo disponible\":"+bolsilloCreado.getResponse().getSaldoDisponible().value()+"\""+","
+                +"\"UsuarioId\":"+bolsilloCreado.getResponse().getUid().value()+"\""+","
+                +"\"¿Es Ahorro?\":"+bolsilloCreado.getResponse().getEsAhorro().value()+"\""+","
+                +"\"Porcentaje de ahorro\":"+bolsilloCreado.getResponse().getPorcentajeAhorro().value()+"}";
 
-        return ("Nombre: "+bolsilloCreado.getResponse().getNombre().value()+"\n"+
-                "Saldo disponible: "+bolsilloCreado.getResponse().getSaldoDisponible().value()+"\n"+
-                "Uid: "+bolsilloCreado.getResponse().getUid().value()+"\n"+
-                "¿Es Ahorro?: "+bolsilloCreado.getResponse().getEsAhorro().value()+"\n"+
-                "Porcentaje de ahorro: "+bolsilloCreado.getResponse().getPorcentajeAhorro().value()
-        );
+        return string;
     }
 
     private CrearBolsilloUseCase.Response executedCrearBolsilloUseCase(CrearBolsillo command){
@@ -67,11 +68,14 @@ public class BolsilloController {
         var command = new ActualizarBolsillo(BolsilloId.of(id), new Nombre(nombre), new SaldoDisponible(saldoDisponible), UsuarioId.of(uid), new EsAhorro(esAhorro), new PorcentajeAhorro(porcentajeAhorro));
         ActualizarBolsilloUseCase.Response bolsilloActualizado = executedActualizarBolsilloUseCase(command);
 
-        return ("Nombre: "+bolsilloActualizado.getResponse().getNombre().value()+"\n"+
-                "Saldo disponible: "+bolsilloActualizado.getResponse().getSaldoDisponible().value()+"\n"+
-                "Uid: "+bolsilloActualizado.getResponse().getUid().value()+"\n"+
-                "¿Es Ahorro?: "+bolsilloActualizado.getResponse().getEsAhorro().value()+"\n"+
-                "Porcentaje de ahorro: "+bolsilloActualizado.getResponse().getPorcentajeAhorro().value());
+        String string = "{" + "\"BolsilloId\":"+ bolsilloActualizado.getResponse().getIdPro()+"\""+","
+                +"\"Nombre\":"+bolsilloActualizado.getResponse().getNombre().value()+"\""+","
+                +"\"Saldo disponible\":"+bolsilloActualizado.getResponse().getSaldoDisponible().value()+"\""+","
+                +"\"UsuarioId\":"+bolsilloActualizado.getResponse().getUid().value()+"\""+","
+                +"\"¿Es Ahorro?\":"+bolsilloActualizado.getResponse().getEsAhorro().value()+"\""+","
+                +"\"Porcentaje de ahorro\":"+bolsilloActualizado.getResponse().getPorcentajeAhorro().value()+"}";
+
+        return string;
     }
 
     public  ActualizarBolsilloUseCase.Response executedActualizarBolsilloUseCase(ActualizarBolsillo command){

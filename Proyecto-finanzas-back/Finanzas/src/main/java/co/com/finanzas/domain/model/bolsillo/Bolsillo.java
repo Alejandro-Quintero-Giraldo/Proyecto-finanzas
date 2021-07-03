@@ -8,14 +8,19 @@ import co.com.finanzas.domain.model.bolsillo.values.*;
 import co.com.sofka.domain.generic.AggregateEvent;
 import co.com.sofka.domain.generic.AggregateRoot;
 import co.com.sofka.domain.generic.DomainEvent;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Document(collation = "Bolsillo")
+@Document(collection = "Bolsillo")
 public class Bolsillo extends AggregateRoot<BolsilloId> {
+
+    @Id
+    protected String idPro;
+
     protected Nombre nombre;
     protected SaldoDisponible saldoDisponible;
     protected Map<MovimientoId, Movimiento> movimientos;
@@ -24,13 +29,22 @@ public class Bolsillo extends AggregateRoot<BolsilloId> {
     protected PorcentajeAhorro porcentajeAhorro;
     protected EsEliminado esEliminado;
 
-    public Bolsillo(BolsilloId bolsilloId, Nombre nombre,SaldoDisponible saldoDisponible ,UsuarioId uid, EsAhorro esAhorro, PorcentajeAhorro porcentajeAhorro) {
-        super(bolsilloId);
+    public Bolsillo(BolsilloId entityId, Nombre nombre,SaldoDisponible saldoDisponible ,UsuarioId uid, EsAhorro esAhorro, PorcentajeAhorro porcentajeAhorro) {
+        super(entityId);
         this.nombre = nombre;
         this.saldoDisponible = saldoDisponible;
         this.Uid = uid;
+        this.idPro = entityId.value();
         this.esAhorro = esAhorro;
         this.porcentajeAhorro = porcentajeAhorro;
+    }
+
+    public String getIdPro() {
+        return idPro;
+    }
+
+    public void setIdPro(String idPro) {
+        this.idPro = idPro;
     }
 
     public void EliminarBolsillo(EsEliminado esEliminado){

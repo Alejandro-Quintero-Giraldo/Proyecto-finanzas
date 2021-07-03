@@ -2,7 +2,6 @@ package co.com.finanzas.useCase;
 
 import co.com.finanzas.domain.infra.repository.BolsilloData;
 import co.com.finanzas.domain.infra.repository.IBolsilloDataRepository;
-import co.com.finanzas.domain.infra.repository.IBolsilloRepository;
 import co.com.finanzas.domain.model.bolsillo.Bolsillo;
 import co.com.finanzas.domain.model.bolsillo.BolsilloBuilder;
 import co.com.finanzas.domain.model.bolsillo.comands.CrearBolsillo;
@@ -20,7 +19,7 @@ import java.util.function.Function;
 public class CrearBolsilloUseCase extends UseCase<RequestCommand<CrearBolsillo>, CrearBolsilloUseCase.Response>{
 
     @Autowired
-    private IBolsilloDataRepository iBolsilloDataRepository;
+    private IBolsilloDataRepository data;
 
     @Override
     public void executeUseCase(RequestCommand<CrearBolsillo> crearBolsilloRequestCommand) {
@@ -35,13 +34,13 @@ public class CrearBolsilloUseCase extends UseCase<RequestCommand<CrearBolsillo>,
                 crearBolsillo.getEsAhorro(),
                 crearBolsillo.getPorcentajeAhorro()
         );
-        iBolsilloDataRepository.save(transformar(bolsillo));
+        data.save(transformar(bolsillo));
         emit().onResponse(new Response(bolsillo));
 
     }
 
     public BolsilloData transformar(Bolsillo bolsillo){
-        BolsilloData bolsilloData = new BolsilloData(bolsillo.identity().value(),bolsillo.getNombre().value(), bolsillo.getSaldoDisponible().value(),bolsillo.getUid().value(),bolsillo.getEsAhorro().value(),bolsillo.getPorcentajeAhorro().value());
+        BolsilloData bolsilloData = new BolsilloData(bolsillo.getIdPro(),bolsillo.getNombre().value(), bolsillo.getSaldoDisponible().value(),bolsillo.getUid().value(),bolsillo.getEsAhorro().value(),bolsillo.getPorcentajeAhorro().value());
         return bolsilloData;
     }
 

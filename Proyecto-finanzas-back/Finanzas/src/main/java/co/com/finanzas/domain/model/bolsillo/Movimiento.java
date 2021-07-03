@@ -10,7 +10,7 @@ public class Movimiento extends Entity<MovimientoId> {
     public final Fecha fecha;
     public final Saldo saldo;
     public final BolsilloId bolsilloId;
-    private final UsuarioId uid;
+    public final UsuarioId uid;
 
     public Movimiento(MovimientoId entityId, Tipo tipo, Fecha fecha, Saldo saldo, BolsilloId bolsilloId, UsuarioId uid) {
         super(entityId);
