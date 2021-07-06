@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-@Document(collation = "Usuario")
+@Document(collection = "Usuario")
 public class Usuario extends Entity<UsuarioId> {
     public final Nombre nombre;
     public final Email email;

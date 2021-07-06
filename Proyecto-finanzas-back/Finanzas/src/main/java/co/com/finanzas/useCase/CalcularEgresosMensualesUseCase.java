@@ -6,6 +6,8 @@ import co.com.finanzas.domain.model.bolsillo.comands.CalcularIngresosMensuales;
 import co.com.finanzas.domain.model.bolsillo.events.EgresoMensualCalculado;
 import co.com.finanzas.domain.model.bolsillo.events.IngresoMensualCalculado;
 import co.com.finanzas.domain.model.bolsillo.values.MovimientoId;
+import co.com.sofka.business.generic.UseCase;
+import co.com.sofka.business.support.RequestCommand;
 import co.com.sofka.domain.generic.DomainEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -17,16 +19,20 @@ import java.util.Set;
 import java.util.function.Function;
 
 @Service
-public class CalcularEgresosMensualesUseCase implements Function<CalcularEgresoMensual, Mono<DomainEvent>> {
+public class CalcularEgresosMensualesUseCase extends UseCase<RequestCommand<CalcularEgresoMensual>, CalcularEgresosMensualesUseCase.Response> {
+
     @Override
-    public Mono<DomainEvent> apply(CalcularEgresoMensual calcularEgresoMensual) {
-        var movimientos = calcularEgresoMensual.getMovimientos();
+    public void executeUseCase(RequestCommand<CalcularEgresoMensual> calcularEgresoMensualRequestCommand) {
+
+        CalcularEgresoMensual command = calcularEgresoMensualRequestCommand.getCommand();
+
+        var movimientos = command.getMovimientos();
 
         var egresoParcial = agruparValores(movimientos);
 
         var egresosMensuales = Calcular(egresoParcial);
 
-        return Mono.just(new EgresoMensualCalculado(egresosMensuales));
+        emit().onResponse(new Response());
     }
 
     public Set<Integer> agruparValores(Map<MovimientoId, Movimiento> movimientos){
@@ -42,6 +48,9 @@ public class CalcularEgresosMensualesUseCase implements Function<CalcularEgresoM
             egresosMensuales += element;
         }
         return egresosMensuales;
+    }
+
+    public static class Response implements UseCase.ResponseValues {
     }
 }
 

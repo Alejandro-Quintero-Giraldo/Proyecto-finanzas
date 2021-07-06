@@ -1,11 +1,13 @@
 package co.com.finanzas.domain.infra.controller;
 
+import co.com.finanzas.domain.infra.repository.BolsilloData;
 import co.com.finanzas.domain.infra.repository.UsuarioData;
 import co.com.finanzas.domain.model.bolsillo.comands.CrearUsuario;
 import co.com.finanzas.domain.model.bolsillo.values.Email;
 import co.com.finanzas.domain.model.bolsillo.values.Nombre;
 import co.com.finanzas.domain.model.bolsillo.values.UsuarioId;
 import co.com.finanzas.useCase.CrearUsuarioUseCase;
+import co.com.finanzas.useCase.TransformacionBolsilloUseCase;
 import co.com.finanzas.useCase.TransformacionUsuarioUseCase;
 import co.com.sofka.business.generic.UseCaseHandler;
 import co.com.sofka.business.support.RequestCommand;
@@ -21,6 +23,9 @@ public class UsuarioController {
 
     @Autowired
     private TransformacionUsuarioUseCase transformacionUsuarioUseCase;
+
+    @Autowired
+    private TransformacionBolsilloUseCase transformacionBolsilloUseCase;
 
     @PostMapping(value = "api/crearUsuario/{uid}/{nombre}/{email}")
     public String saveUsuario(
@@ -60,5 +65,10 @@ public class UsuarioController {
     @GetMapping(value = "api/mostrarUsuario/{id}")
     public UsuarioData listarPorId(@PathVariable("id") String id){
         return transformacionUsuarioUseCase.listarPorId(id);
+    }
+
+    @GetMapping(value = "api/mostrarBolsilloUid/{uid}")
+    public Iterable<BolsilloData> listarBolsillos(@PathVariable("uid") String uid){
+        return transformacionBolsilloUseCase.listarPorUid(uid);
     }
 }

@@ -41,10 +41,10 @@ class CalcularEgresosMensualesUseCaseTest {
         var event = new EgresoMensualCalculado(calcularEgresosMensualesUseCase.Calcular(calcularEgresosMensualesUseCase.agruparValores(movimientos)));
 
         Assertions.assertEquals(35000,event.getEgresosMensuales());
-
+/*
         StepVerifier.create(calcularEgresosMensualesUseCase.apply(command))
                 .expectNextMatches(domainEvent -> domainEvent.equals(event))
-                .expectComplete();
+                .expectComplete();*/
     }
 
 }

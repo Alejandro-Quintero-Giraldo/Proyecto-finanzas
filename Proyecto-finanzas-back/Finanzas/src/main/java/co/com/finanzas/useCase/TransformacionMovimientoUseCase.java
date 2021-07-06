@@ -12,16 +12,16 @@ public class TransformacionMovimientoUseCase {
     @Autowired
     private IMovimientoDataRepository data;
 
-    public MovimientoData transformar(Movimiento movimiento){
-        MovimientoData movimientoData = new MovimientoData(movimiento.identity().value(),movimiento.getTipo().value(),movimiento.getSaldo().value(),movimiento.getBolsilloId().value(),movimiento.getUid().value());
-        return  movimientoData;
+    public Iterable<MovimientoData> listarPorBolsilloId(String bolsilloId){
+        return data.findByBolsilloId(bolsilloId);
     }
 
-    public Iterable<MovimientoData> listar(){
-        return data.findAll();
-    }
-
-    public MovimientoData listarPorId(String id){
-        return data.findById(id).orElseThrow(RuntimeException::new);
+    public String eliminarMovimientosPorBolsillo(Iterable<MovimientoData> movimientos){
+        try {
+            data.deleteAll(movimientos);
+            return "Se eliminaron los movimientos del bolsillo con éxito";
+        } catch (Exception e){
+            return "Ocurrió un error. Por favor inténtelo nuevamente";
+        }
     }
 }

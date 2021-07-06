@@ -4,6 +4,8 @@ import co.com.finanzas.domain.model.bolsillo.Movimiento;
 import co.com.finanzas.domain.model.bolsillo.values.MovimientoId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.HashMap;
 import java.util.Map;
 
 @Document(collection = "Bolsillo")
@@ -16,7 +18,7 @@ public class BolsilloData {
     protected Integer saldoDisponible;
     protected Boolean esAhorro;
     protected String uid;
-    protected Map<String, Movimiento> movimientos;
+    protected Map<String, MovimientoData> movimientos;
     protected Integer porcentajeAhorro;
 
     public BolsilloData(String id, String nombre, Integer saldoDisponible, String uid, Boolean esAhorro, Integer porcentajeAhorro){
@@ -26,6 +28,7 @@ public class BolsilloData {
         this.uid = uid;
         this.esAhorro = esAhorro;
         this.porcentajeAhorro = porcentajeAhorro;
+        this.movimientos = new HashMap();
     }
 
     public BolsilloData(){
@@ -71,11 +74,11 @@ public class BolsilloData {
         this.uid = uid;
     }
 
-    public Map<String, Movimiento> getMovimientos() {
+    public Map<String, MovimientoData> getMovimientos() {
         return movimientos;
     }
 
-    public void setMovimientos(Map<String, Movimiento> movimientos) {
+    public void setMovimientos(Map<String, MovimientoData> movimientos) {
         this.movimientos = movimientos;
     }
 

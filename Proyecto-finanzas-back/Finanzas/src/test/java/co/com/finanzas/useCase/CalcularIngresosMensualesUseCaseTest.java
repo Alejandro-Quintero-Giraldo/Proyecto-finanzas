@@ -42,10 +42,10 @@ class CalcularIngresosMensualesUseCaseTest {
         var event = new IngresoMensualCalculado(calcularIngresosMensualesUseCase.Calcular(calcularIngresosMensualesUseCase.agruparValores(movimientos)));
 
         Assertions.assertEquals(35000,event.getIngresosMensuales());
-
+/*
         StepVerifier.create(calcularIngresosMensualesUseCase.apply(command))
                 .expectNextMatches(domainEvent -> domainEvent.equals(event))
-                .expectComplete();
+                .expectComplete();*/
     }
 
 }

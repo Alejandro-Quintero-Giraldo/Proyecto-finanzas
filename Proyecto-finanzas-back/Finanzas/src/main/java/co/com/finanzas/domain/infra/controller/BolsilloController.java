@@ -1,14 +1,11 @@
 package co.com.finanzas.domain.infra.controller;
 
 import co.com.finanzas.domain.infra.repository.BolsilloData;
-import co.com.finanzas.domain.model.bolsillo.comands.ActualizarBolsillo;
-import co.com.finanzas.domain.model.bolsillo.comands.CrearBolsillo;
-import co.com.finanzas.domain.model.bolsillo.comands.CrearUsuario;
+import co.com.finanzas.domain.infra.repository.MovimientoData;
+import co.com.finanzas.domain.model.bolsillo.Bolsillo;
+import co.com.finanzas.domain.model.bolsillo.comands.*;
 import co.com.finanzas.domain.model.bolsillo.values.*;
-import co.com.finanzas.useCase.ActualizarBolsilloUseCase;
-import co.com.finanzas.useCase.CrearBolsilloUseCase;
-import co.com.finanzas.useCase.CrearUsuarioUseCase;
-import co.com.finanzas.useCase.TransformacionBolsilloUseCase;
+import co.com.finanzas.useCase.*;
 import co.com.sofka.business.generic.UseCaseHandler;
 import co.com.sofka.business.support.RequestCommand;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +23,15 @@ public class BolsilloController {
 
     @Autowired
     private TransformacionBolsilloUseCase transformacionBolsilloUseCase;
+
+    @Autowired
+    private IngresarDineroUseCase ingresarDineroUseCase;
+
+    @Autowired
+    private TransformacionMovimientoUseCase transformacionMovimientoUseCase;
+
+    @Autowired
+    private SacarDineroUseCase sacarDineroUseCase;
 
     @PostMapping(value = "api/crearbolsillo/{bolsilloId}/{nombre}/{uid}/{porcentajeAhorro}")
     public String saveBolsillo(
@@ -99,5 +105,65 @@ public class BolsilloController {
     @DeleteMapping(value = "api/eliminarBolsillo/{id}")
     public String eliminar(@PathVariable("id") String id){
         return (transformacionBolsilloUseCase.eliminar(id));
+    }
+
+    @PostMapping(value = "api/ingresarDinero/{movimientoId}/{saldo}/{bolsilloId}/{uid}")
+    public String saveIngresarDinero(
+            @PathVariable("movimientoId") String movimientoId,
+            @PathVariable("saldo") Integer saldo,
+            @PathVariable("bolsilloId") String bolsilloId,
+            @PathVariable("uid") String uid) {
+
+        IngresarDinero command = new IngresarDinero(MovimientoId.of(movimientoId), new Saldo(saldo), BolsilloId.of(bolsilloId), UsuarioId.of(uid));
+
+        IngresarDineroUseCase.Response dineroIngresado = executedIngresarDineroUseCase(command);
+
+        String string = "{" + "\"MovimientoId\":" + "\"" + dineroIngresado.getResponse().identity().value() + "\"" + ","
+                + "\"Saldo\":" + "\"" + dineroIngresado.getResponse().getSaldo().value() + "\"" + ","
+                + "\"Tipo\":" + "\"" + dineroIngresado.getResponse().getTipo().value() + "\"" + ","
+                + "\"Fecha\":" + "\"" + dineroIngresado.getResponse().getFecha().value() + "\"" + ","
+                + "\"UsuarioId\":" + "\"" + dineroIngresado.getResponse().getUid().value() + "\"" + ","
+                + "\"BolsilloId\":" + "\"" + dineroIngresado.getResponse().getBolsilloId().value() + "}";
+        return string;
+    }
+
+    public IngresarDineroUseCase.Response executedIngresarDineroUseCase(IngresarDinero command){
+
+        IngresarDineroUseCase.Response dineroIngresado = UseCaseHandler.getInstance()
+                .syncExecutor(ingresarDineroUseCase,new RequestCommand<>(command)).orElseThrow();
+        return  dineroIngresado;
+    }
+
+    @GetMapping(value = "api/mostrarMovimientos/{bolsilloId}")
+    public Iterable<MovimientoData> mostrarMovimientosPorBolsillo(@PathVariable("bolsilloId") String bolsilloId){
+        return transformacionMovimientoUseCase.listarPorBolsilloId(bolsilloId);
+    }
+
+    @PostMapping(value = "api/sacarDinero/{movimientoId}/{saldo}/{bolsilloId}/{uid}")
+    public String saveSacarDinero(
+            @PathVariable("movimientoId") String movimientoId,
+            @PathVariable("saldo") Integer saldo,
+            @PathVariable("bolsilloId") String bolsilloId,
+            @PathVariable("uid") String uid) {
+
+        SacarDinero command = new SacarDinero(MovimientoId.of(movimientoId), new Saldo(saldo), BolsilloId.of(bolsilloId), UsuarioId.of(uid));
+
+        SacarDineroUseCase.Response dineroSacado = executedSacarDineroUseCase(command);
+
+        String string = "{" + "\"MovimientoId\":" + "\"" + dineroSacado.getResponse().identity().value() + "\"" + ","
+                + "\"Saldo\":" + "\"" + dineroSacado.getResponse().getSaldo().value() + "\"" + ","
+                + "\"Tipo\":" + "\"" + dineroSacado.getResponse().getTipo().value() + "\"" + ","
+                + "\"Fecha\":" + "\"" + dineroSacado.getResponse().getFecha().value() + "\"" + ","
+                + "\"UsuarioId\":" + "\"" + dineroSacado.getResponse().getUid().value() + "\"" + ","
+                + "\"BolsilloId\":" + "\"" + dineroSacado.getResponse().getBolsilloId().value() + "}";
+        return string;
+    }
+
+    public SacarDineroUseCase.Response executedSacarDineroUseCase(SacarDinero command){
+        SacarDineroUseCase.Response events = UseCaseHandler.getInstance()
+                .syncExecutor(sacarDineroUseCase,new RequestCommand<>(command)).orElseThrow();
+
+        SacarDineroUseCase.Response dineroSacado = events;
+        return  dineroSacado;
     }
 }
