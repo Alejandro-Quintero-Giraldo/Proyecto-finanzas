@@ -36,3 +36,22 @@
     transform: rotate(360deg);
   }
 }
+
+.cont-main{
+  background-color: rgb(233, 224, 224);
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1%;
+  height: 95%;
+  width: 98%;
+  position: absolute;
+}
+
+.button-login{
+  background-color: #ffffff;
+  border: 1px solid rgb(199, 191, 191);
+  display:flex;
+  justify-content: right;
+  align-items: center;
+}

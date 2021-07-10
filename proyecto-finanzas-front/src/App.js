@@ -1,24 +1,29 @@
-import logo from './logo.svg';
 import './App.css';
+import { Inicio } from './pages/Inicio';
+import { Principal } from './pages/Principal';
+
+import { BrowserRouter as Router, Switch, Route} from 'react-router-dom'; 
+
+import { firebaseConfig } from "../src/components/FireBaseConfig";
+import firebase from 'firebase/app';
+import 'firebase/auth';
+
+firebase.initializeApp(firebaseConfig);
+
+export const url = "localhost:8080/api";
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Router>
+          <Switch>
+            <Route path='/' exact component={Inicio}/>
+            
+          </Switch>
+      </Router>
+
+    </>
   );
 }
 
